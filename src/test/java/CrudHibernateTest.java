@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 
+import com.hibernate.entity.Instructor;
+import com.hibernate.entity.InstructorDetail;
 import com.hibernate.entity.Student;
 
 class CrudHibernateTest {
@@ -19,24 +21,31 @@ class CrudHibernateTest {
 	@BeforeEach
 	void setup() {
 
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Student.class)
+		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml")
+				.addAnnotatedClass(Instructor.class)
+				.addAnnotatedClass(InstructorDetail.class)
 				.buildSessionFactory();
 		session = factory.getCurrentSession();
 	
 	}
 	
-	@Disabled
+	
 	@ParameterizedTest
 	@CsvFileSource(resources = "/Data.csv", numLinesToSkip = 1)
-	void saving_students(String name, String lastName, String email) {
+	void saving_instructors(String name, String lastName, String email, String hobby, String youtube) {
 
 		session.beginTransaction();
 
-		session.save(new Student(name, lastName, email));
+		Instructor instructor = new Instructor(name, lastName, email);
+		
+		InstructorDetail insDetail = new InstructorDetail(hobby, youtube);
+		
+		instructor.setInsDetail(insDetail);
+		
+		session.save(instructor);
 
 		session.getTransaction().commit();
 
-		session.close();
 
 	}
 	
@@ -92,6 +101,7 @@ class CrudHibernateTest {
 		session.getTransaction().commit();
 	}
 	
+	@Disabled
 	@Test
 	void delete_student_query() {
 	session.beginTransaction();

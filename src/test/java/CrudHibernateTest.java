@@ -21,10 +21,7 @@ class CrudHibernateTest {
 	@BeforeEach
 	void setup() {
 
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml")
-				.addAnnotatedClass(Instructor.class)
-				.addAnnotatedClass(InstructorDetail.class)
-				.buildSessionFactory();
+		SessionFactory factory = HibernateUtil.getSessionfactory();
 		session = factory.getCurrentSession();
 	
 	}

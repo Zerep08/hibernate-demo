@@ -4,6 +4,7 @@ import org.hibernate.cfg.Configuration;
 import com.hibernate.entity.Course;
 import com.hibernate.entity.Instructor;
 import com.hibernate.entity.InstructorDetail;
+import com.hibernate.entity.Review;
 
 public class HibernateUtil {
 	
@@ -16,6 +17,7 @@ public class HibernateUtil {
 					.addAnnotatedClass(Instructor.class)
 					.addAnnotatedClass(InstructorDetail.class)
 					.addAnnotatedClass(Course.class)
+					.addAnnotatedClass(Review.class)
 					.buildSessionFactory();
 	}
 
